@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { SimulationResult, Persona } from '../engine/types';
+import type { SimulationResult } from '../engine/types';
 import { PERSONA_LABELS, PERSONA_COLORS } from '../engine/personas';
 import { Trophy, Heart, AlertTriangle, RotateCcw, ArrowLeft, TrendingUp, ScrollText, ChevronDown, ChevronUp } from 'lucide-react';
 

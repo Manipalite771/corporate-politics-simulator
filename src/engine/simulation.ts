@@ -3,6 +3,7 @@ import type {
   SimulationResult,
   TeamState,
   TeamConfig,
+  Member,
   TickLog,
   Persona,
   RelationshipState,

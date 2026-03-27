@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { SimulationConfig, TeamConfig, Persona, RelationshipState } from '../engine/types';
-import { PERSONA_LABELS, PERSONA_COLORS, PERSONA_DESCRIPTIONS } from '../engine/personas';
+import { PERSONA_LABELS, PERSONA_COLORS } from '../engine/personas';
 import { Users, Plus, Trash2, Play, ArrowLeft, Info } from 'lucide-react';
 
 interface Props {
