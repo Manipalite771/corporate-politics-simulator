@@ -198,49 +198,48 @@ export default function SimulationViewer({ result, onFinish, onRestart }: Props)
   return (
     <div className="space-y-5">
       {/* Timeline & Controls */}
-      <div className="bg-zinc-900/70 border border-zinc-800 rounded-xl p-4">
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-3">
-            <h2 className="text-xl font-bold text-white">Simulation Running</h2>
-            <span className="text-sm text-zinc-400">
-              Tick <span className="text-amber-400 font-mono font-bold">{currentTick}</span> / {result.totalTicks}
-            </span>
-          </div>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => { setPlaying(!playing); }}
-              aria-label={playing ? 'Pause simulation' : 'Play simulation'}
-              className="p-2 rounded-lg bg-zinc-800 text-zinc-300 hover:bg-zinc-700 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500/50"
-            >
-              {playing ? <Pause size={16} /> : <Play size={16} />}
-            </button>
-            <button
-              onClick={() => { if (currentTick < result.totalTicks) setCurrentTick(currentTick + 1); }}
-              disabled={currentTick >= result.totalTicks}
-              aria-label="Step forward one tick"
-              className="p-2 rounded-lg bg-zinc-800 text-zinc-300 hover:bg-zinc-700 transition-colors disabled:opacity-30 focus:outline-none focus:ring-2 focus:ring-amber-500/50"
-            >
-              <SkipForward size={16} />
-            </button>
-            <button
-              onClick={() => setCurrentTick(result.totalTicks)}
-              disabled={currentTick >= result.totalTicks}
-              aria-label="Skip to end"
-              className="p-2 rounded-lg bg-zinc-800 text-zinc-300 hover:bg-zinc-700 transition-colors disabled:opacity-30 focus:outline-none focus:ring-2 focus:ring-amber-500/50 text-xs font-bold"
-            >
-              ⏭
-            </button>
-            <button onClick={onRestart} aria-label="Back to configuration" className="p-2 rounded-lg bg-zinc-800 text-zinc-300 hover:bg-zinc-700 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500/50">
-              <RotateCcw size={16} />
-            </button>
-            <select value={speed} onChange={(e) => setSpeed(Number(e.target.value))}
-              className="bg-zinc-800 border border-zinc-700 rounded-lg px-2 py-1.5 text-xs text-zinc-300">
-              <option value={100}>Fast</option>
-              <option value={300}>Normal</option>
-              <option value={600}>Slow</option>
-              <option value={1200}>Very Slow</option>
-            </select>
-          </div>
+      <div className="bg-zinc-900/70 border border-zinc-800 rounded-xl p-4 space-y-3">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg sm:text-xl font-bold text-white">Simulation Running</h2>
+          <span className="text-sm text-zinc-400">
+            Tick <span className="text-amber-400 font-mono font-bold">{currentTick}</span> / {result.totalTicks}
+          </span>
+        </div>
+
+        <div className="flex items-center gap-1.5 flex-wrap">
+          <button
+            onClick={() => { setPlaying(!playing); }}
+            aria-label={playing ? 'Pause simulation' : 'Play simulation'}
+            className="p-2 rounded-lg bg-zinc-800 text-zinc-300 hover:bg-zinc-700 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+          >
+            {playing ? <Pause size={16} /> : <Play size={16} />}
+          </button>
+          <button
+            onClick={() => { if (currentTick < result.totalTicks) setCurrentTick(currentTick + 1); }}
+            disabled={currentTick >= result.totalTicks}
+            aria-label="Step forward one tick"
+            className="p-2 rounded-lg bg-zinc-800 text-zinc-300 hover:bg-zinc-700 transition-colors disabled:opacity-30 focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+          >
+            <SkipForward size={16} />
+          </button>
+          <button
+            onClick={() => setCurrentTick(result.totalTicks)}
+            disabled={currentTick >= result.totalTicks}
+            aria-label="Skip to end"
+            className="p-2 rounded-lg bg-zinc-800 text-zinc-300 hover:bg-zinc-700 transition-colors disabled:opacity-30 focus:outline-none focus:ring-2 focus:ring-amber-500/50 text-xs font-bold"
+          >
+            ⏭
+          </button>
+          <button onClick={onRestart} aria-label="Back to configuration" className="p-2 rounded-lg bg-zinc-800 text-zinc-300 hover:bg-zinc-700 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500/50">
+            <RotateCcw size={16} />
+          </button>
+          <select value={speed} onChange={(e) => setSpeed(Number(e.target.value))} aria-label="Playback speed"
+            className="bg-zinc-800 border border-zinc-700 rounded-lg px-2 py-1.5 text-xs text-zinc-300 ml-auto">
+            <option value={100}>Fast</option>
+            <option value={300}>Normal</option>
+            <option value={600}>Slow</option>
+            <option value={1200}>Very Slow</option>
+          </select>
         </div>
 
         {/* Progress bar */}
@@ -248,6 +247,19 @@ export default function SimulationViewer({ result, onFinish, onRestart }: Props)
           <div className="h-full bg-amber-500 transition-all duration-300 rounded-full" style={{ width: `${(currentTick / result.totalTicks) * 100}%` }} />
         </div>
       </div>
+
+      {/* Finished CTA — placed high so mobile users see it immediately */}
+      {currentTick >= result.totalTicks && (
+        <div className="bg-zinc-900/70 border border-emerald-500/30 rounded-xl p-5 text-center space-y-3">
+          <CheckCircle2 size={24} className="text-emerald-400 mx-auto" />
+          <h3 className="text-xl font-bold text-white">Simulation Complete</h3>
+          <p className="text-sm text-zinc-400">All {result.totalTicks} ticks processed. View the full results breakdown.</p>
+          <button onClick={onFinish}
+            className="px-6 py-2.5 bg-amber-500 text-black font-bold rounded-xl hover:bg-amber-400 transition-colors">
+            View Results
+          </button>
+        </div>
+      )}
 
       {/* Reading Guide */}
       <ReadingGuide />
@@ -333,18 +345,6 @@ export default function SimulationViewer({ result, onFinish, onRestart }: Props)
         </div>
       )}
 
-      {/* Finished CTA */}
-      {currentTick >= result.totalTicks && (
-        <div className="bg-zinc-900/70 border border-emerald-500/30 rounded-xl p-5 text-center space-y-3">
-          <CheckCircle2 size={24} className="text-emerald-400 mx-auto" />
-          <h3 className="text-xl font-bold text-white">Simulation Complete</h3>
-          <p className="text-sm text-zinc-400">All {result.totalTicks} ticks processed. View the full results breakdown.</p>
-          <button onClick={onFinish}
-            className="px-6 py-2.5 bg-amber-500 text-black font-bold rounded-xl hover:bg-amber-400 transition-colors">
-            View Results
-          </button>
-        </div>
-      )}
     </div>
   );
 }

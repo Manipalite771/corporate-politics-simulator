@@ -41,6 +41,15 @@ export default function ScenarioSelector({ onSelectScenario, onCustom }: Props) 
         </p>
       </div>
 
+      <div className="flex justify-center">
+        <button
+          onClick={onCustom}
+          className="flex items-center gap-2 px-6 py-3 bg-zinc-800 border border-zinc-700 rounded-xl text-zinc-300 hover:bg-zinc-700 hover:text-white transition-colors"
+        >
+          <Settings size={18} /> Build Custom Simulation
+        </button>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         {SCENARIOS.map((scenario, idx) => {
           const Icon = SCENARIO_ICONS[idx];
@@ -95,14 +104,6 @@ export default function ScenarioSelector({ onSelectScenario, onCustom }: Props) 
         })}
       </div>
 
-      <div className="flex justify-center">
-        <button
-          onClick={onCustom}
-          className="flex items-center gap-2 px-6 py-3 bg-zinc-800 border border-zinc-700 rounded-xl text-zinc-300 hover:bg-zinc-700 hover:text-white transition-colors"
-        >
-          <Settings size={18} /> Build Custom Simulation
-        </button>
-      </div>
     </div>
   );
 }
