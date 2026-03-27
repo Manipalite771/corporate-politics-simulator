@@ -283,7 +283,7 @@ export default function ConfigPanel({ onRun, onBack, initialConfig }: Props) {
             </div>
 
             <div>
-              <label className="block text-sm text-zinc-400 mb-2">Persona Composition</label>
+              <label className="block text-sm text-zinc-400 mb-2">Team Member Mix</label>
               <div className="space-y-2">
                 {PERSONAS.map((p) => (
                   <div key={p} className="flex items-center gap-3">
